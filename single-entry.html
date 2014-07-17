@@ -1,0 +1,57 @@
+<link rel="import"
+  href="dict-entry.html">
+<link rel="import"
+  href="bower_components/core-collapse/core-collapse.html">
+
+<polymer-element name="single-entry" attributes="entryid apikey entry" constructor="SingleEntry">
+  <template>
+    <style>
+    :host {
+      display: block;
+      width: 100%;
+    }
+    .definition {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    </style>
+    <core-ajax id="ajax"
+      auto
+      url="https://api.pearson.com/v2/dictionaries/entries/{{entryid}}"
+      response="{{response}}"
+      handleAs="json">
+    </core-ajax>
+    <dict-entry>
+      <h2>{{response.result.headword}}&nbsp;</h2>
+      <h3 style="color: #ccc;">{{response.result.part_of_speech}}</h3>
+      <div>
+        <a on-click="{{toggle}}">Definition
+          <core-icon style="height: 24px; width: 24px;" src="{{src}}" icon="{{icon}}"><svg style="pointer-events: none; width: 24px; height: 24px; display: block;" viewBox="0 0 24 24"><g><polygon points="10,6 8.6,7.4 13.2,12 8.6,16.6 10,18 16,12 "></polygon></g></svg></core-icon>
+        </a>
+        <core-collapse id="collapse" fixedSize class="box" style="overflow: scroll;">
+          <div class="content">
+            <ul>
+              <template repeat="{{ sense in response.result.senses }}">
+                <li class="definition">{{sense.definition}}</li>
+              </template>
+            </ul>
+          </div>
+        </core-collapse>
+      </div>
+    </dict-entry>
+  </template>
+  <script>
+  Polymer('single-entry', {
+    created: function() {
+      console.log("I was made!");
+    },
+    responseChanged: function(oldValue) {
+      this.entry = this.response;
+      console.log(this.entry);
+    },
+    toggle: function() {
+      this.$.collapse.toggle();
+    }
+  })
+  </script>
+</polymer-element>

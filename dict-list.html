@@ -1,0 +1,37 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="dict-search-service.html">
+<link rel="import" href="dict-entry.html">
+<link rel="import" href="single-entry.html">
+
+<polymer-element name="dict-list" attributes="show apikey headword dictionary">
+  <template>
+    <style>
+    :host {
+      display: block;
+      width: 100%;
+    }
+    dict-entry {
+      margin-bottom: 30px;
+    }
+    </style>
+
+    <dict-search-service id="service" entries="{{entries}}" headword="{{headword}}" dictionary="{{dictionary}}">
+    </dict-search-service>
+    <div layout vertical center>
+      <template repeat="{{entry in entries.results}}">
+        <single-entry entryid="{{entry.id}}" apikey="{{apikey}}">
+        </single-entry>
+      </template>
+    </div>
+
+  </template>
+
+  <script>
+  Polymer('dict-list', {
+    created: function() {
+      console.log("I exist");
+    }
+  });
+  </script>
+
+</polymer-element>

@@ -1,0 +1,50 @@
+<link rel="import"
+  href="bower_components/core-selector/core-selector.html">
+<link rel="import"
+  href="bower_components/core-input/core-input.html">
+<link rel="import"
+  href="single-entry.html">
+<link rel="import"
+  href="dict-list.html">
+<link rel="import"
+  href="dict-entry.html">
+<polymer-element name="search-example">
+  <template>
+    <style>
+      .list {
+        display: block;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        background: #666;
+        color: white;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .list > * {
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .list > *.core-selected {
+        background: #333;
+      }
+
+      li.core-selected:after {
+        content: "\2713";
+        position: absolute;
+        padding-left: 10px;
+      }
+    </style>
+    <core-input id="single" placeholder="Headword" style="background-color: #fff; height: 1em; padding: 10px; margin-bottom: 30px;" inputValue="{{headword}}"></core-input>
+    <!--PUT YOUR API KEY HERE -->
+    <dict-list show="all" apikey="" headword="{{headword}}" dictionary="ldoce5">
+    </dict-list>
+  </template>
+  <script>
+    Polymer('search-example', {});
+  </script>
+</polymer-element>

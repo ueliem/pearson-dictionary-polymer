@@ -1,0 +1,36 @@
+<link rel="import" href="bower_components/polymer/polymer.html">
+<link rel="import" href="bower_components/core-ajax/core-ajax.html">
+
+<polymer-element name="dict-search-service" attributes="apikey entries headword dictionary">
+  <template>
+    <style>
+    :host {
+      display: none;
+    }
+    </style>
+    <core-ajax id="ajax"
+      auto
+      url="https://api.pearson.com/v2/dictionaries/{{dictionary}}/entries"
+      params='{"apikey":"{{apikey}}", "headword":"{{headword}}"}'
+      on-core-response="{{entriesLoaded}}"
+      response="{{response}}"
+      handleAs="json">
+    </core-ajax>
+  </template>
+  <script>
+  Polymer('dict-search-service', {
+    headword: "cat",
+    apikey: "",
+    dictionary: "ldoce5",
+    created: function() {
+      this.entries = [];
+      console.log("created service");
+    },
+    responseChanged: function(previousResponse) {
+      // console.log(this.response);
+      this.entries = this.response;
+      console.log(this.dictionary);
+    }
+  });
+  </script>
+</polymer-element>
